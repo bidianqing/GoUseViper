@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/viper"
+	_ "github.com/spf13/viper/remote"
 )
 
 func main() {
@@ -25,9 +26,11 @@ func main() {
 		panic(fmt.Errorf("fatal error config file: %w", err))
 	}
 
+	// 从appsettings.json读取
 	name := viper.GetString("AppName")
 	fmt.Println(name)
 
+	// 从appsettings.{environmentName}.json读取
 	mysqlConnectionString := viper.GetString("ConnectionStrings.Mysql")
 	fmt.Println(mysqlConnectionString)
 
@@ -37,6 +40,14 @@ func main() {
 	fmt.Println(emailOptions.Sender)
 	fmt.Println(emailOptions.UserName)
 	fmt.Println(emailOptions.Password)
+
+	// 读取远程consul配置
+	consulEndPoint := viper.GetString("ConsulEndPoint")
+	viper.AddRemoteProvider("consul", consulEndPoint, "section1.json")
+	viper.ReadRemoteConfig()
+
+	// 从远程consul读取
+	fmt.Println(viper.GetString("Level"))
 }
 
 type EmailOptions struct {
