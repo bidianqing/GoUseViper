@@ -25,9 +25,22 @@ func main() {
 		panic(fmt.Errorf("fatal error config file: %w", err))
 	}
 
-	name := viper.Get("AppName")
+	name := viper.GetString("AppName")
 	fmt.Println(name)
 
 	mysqlConnectionString := viper.GetString("ConnectionStrings.Mysql")
 	fmt.Println(mysqlConnectionString)
+
+	// Options模式使用struct提供对相关配置组的强类型访问
+	var emailOptions EmailOptions
+	viper.UnmarshalKey("EmailOptions", &emailOptions)
+	fmt.Println(emailOptions.Sender)
+	fmt.Println(emailOptions.UserName)
+	fmt.Println(emailOptions.Password)
+}
+
+type EmailOptions struct {
+	Sender   string
+	UserName string
+	Password string
 }
