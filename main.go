@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/spf13/viper"
-	_ "github.com/spf13/viper/remote"
 )
 
 func main() {
@@ -40,14 +39,6 @@ func main() {
 	fmt.Println(emailOptions.Sender)
 	fmt.Println(emailOptions.UserName)
 	fmt.Println(emailOptions.Password)
-
-	// 读取远程consul配置
-	consulEndPoint := viper.GetString("ConsulEndPoint")
-	viper.AddRemoteProvider("consul", consulEndPoint, "section1.json")
-	viper.ReadRemoteConfig()
-
-	// 从远程consul读取
-	fmt.Println(viper.GetString("Level"))
 }
 
 type EmailOptions struct {
