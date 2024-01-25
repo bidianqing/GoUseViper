@@ -3,12 +3,21 @@ package main
 import (
 	"fmt"
 
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
+var env string
+var rootCmd = &cobra.Command{
+	Use: "mygo",
+}
+
 func main() {
+	rootCmd.Flags().StringVarP(&env, "env", "e", "", "环境变量")
+	rootCmd.Execute()
+
 	// 获取运行环境 Development  Staging or Production
-	environmentName := "Development"
+	environmentName := env //"Development"
 
 	viper.AddConfigPath(".")
 	viper.SetConfigType("json")
