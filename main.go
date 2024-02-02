@@ -14,7 +14,7 @@ func main() {
 
 	flag.Parse()
 
-	viper.AddConfigPath(".")
+	viper.AddConfigPath("./configs")
 	viper.SetConfigType("json")
 
 	// 公共的配置文件，无论哪个环境都加载

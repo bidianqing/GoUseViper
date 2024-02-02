@@ -1,4 +1,4 @@
-module example/hello
+module giithub.com/bidianqing/go-use-viper
 
 go 1.21.5
 
